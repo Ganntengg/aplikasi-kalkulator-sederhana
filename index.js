@@ -1,12 +1,22 @@
 class Calculator {
   constructor() {}
   dapatkanHasil(str) {
-    const gantiOperasi = str.replace("×", "*").replace("÷", "/");
-    console.log(eval(gantiOperasi));
-    return updateLayar(str.length === 1 ? str : eval(gantiOperasi));
+    const gantiOperasi = str
+      .replace(/×/g, "*")
+      .replace(/÷/g, "/")
+      .replaceAll(",", "");
+    updateLayar(
+      str.length === 1
+        ? str
+        : eval(gantiOperasi) === Infinity || eval(gantiOperasi) === -Infinity
+        ? "Cant divide by zero!"
+        : eval(gantiOperasi).toLocaleString()
+    );
   }
   hapusSatu(str) {
-    updateLayar(str.length === 1 ? 0 : str.slice(0, -1));
+    updateLayar(
+      str.length === 1 || str === "Cant divide by zero!" ? 0 : str.slice(0, -1)
+    );
   }
   hapusSemua() {
     updateLayar(0);
@@ -30,13 +40,15 @@ function updateLayar(val) {
 function angkaClicked(angka) {
   layar.textContent === "0" ||
   layar.textContent === "00" ||
-  layar.textContent === "."
+  layar.textContent === "." ||
+  layar.textContent === "Cant divide by zero!"
     ? updateLayar(angka)
     : updateLayar(layar.textContent + angka);
 }
 
 function opClicked(op) {
   const charTerakhir = layar.textContent.slice(-1);
+  if (layar.textContent === "Cant divide by zero!") updateLayar(0 + op);
   if (
     charTerakhir == "÷" ||
     charTerakhir == "×" ||
