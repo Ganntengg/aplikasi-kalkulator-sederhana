@@ -30,7 +30,6 @@ const btnOp = document.querySelectorAll(".op");
 const btnHasil = document.getElementById("hasil");
 const btnHapusSatu = document.getElementById("hapus");
 const btnHapusSemua = document.getElementById("CA");
-
 let titik = false;
 
 function updateLayar(val) {
